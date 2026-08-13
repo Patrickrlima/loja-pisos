@@ -8,7 +8,7 @@ export default {
 	whatsappMessage: `Olá! Vim pelo site e gostaria de um orçamento de pisos.`,
 	phoneDisplay: `(51) 99999-9999`,
 	email: `contato@classeapisos.com.br`,
-	address: `Av. Exemplo, 1234 - Centro, Cachoeirinha/RS`,
+	address: `Albatroz, Osório - RS, 95520-000`,
 	hours: `Seg a Sex: 8h às 18h | Sáb: 8h às 12h`,
 	enableThemeSwitcher: false,
 	showPlug: false,
