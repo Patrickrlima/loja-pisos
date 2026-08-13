@@ -1,0 +1,172 @@
+---
+import { Container, Button } from '@components/odyssey-theme';
+import { Icon } from 'astro-icon/components';
+import Layout from '../../layouts/Page.astro';
+import HeroSection from '../../components/sections/heros/HeroSection.astro';
+import settings from '../../config/settings.js';
+import { withBase } from '../../utils/url.js';
+
+const seo = {
+	title: `Projetos | ${settings.name}`,
+	description: 'Projetos e ambientes já entregues pela Classe A Pisos, organizados por cômodo.',
+};
+
+const whatsappHref = (ambiente) =>
+	`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
+		`Olá! Vi os projetos de ${ambiente} no site e quero um orçamento parecido.`
+	)}`;
+
+// Fotos ilustrativas — troque pelas fotos reais de cada projeto entregue
+// pela loja, organizadas por ambiente, assim que estiverem disponíveis.
+const ambientes = [
+	{
+		id: 'sala',
+		title: 'Sala',
+		img: withBase('/assets/images/galeria/galeria-4.jpg'),
+		desc: 'Salas e corredores com porcelanato de grande formato, criando ambientes amplos e com poucas juntas de rejunte.',
+	},
+	{
+		id: 'cozinha',
+		title: 'Cozinha',
+		img: withBase('/assets/images/galeria/galeria-2.jpg'),
+		desc: 'Pisos resistentes à água e fáceis de limpar para o dia a dia da cozinha, sem abrir mão do acabamento bonito.',
+	},
+	{
+		id: 'quarto',
+		title: 'Quarto',
+		img: withBase('/assets/images/produto-laminado.jpg'),
+		desc: 'Conforto térmico e acústico com laminados e vinílicos, ideais para quartos e ambientes de descanso.',
+	},
+	{
+		id: 'area-externa',
+		title: 'Área Externa',
+		img: withBase('/assets/images/galeria/galeria-1.jpg'),
+		desc: 'Pisos antiderrapantes para varandas, garagens, calçadas e piscinas, resistentes ao tempo.',
+	},
+];
+---
+
+<Layout {seo}>
+	<HeroSection>
+		<Fragment slot="text-container">
+			<h1>Nossos Projetos</h1>
+			<p>
+				Confira ambientes já entregues pela {settings.name}, organizados por
+				cômodo. As fotos abaixo são ilustrativas — assim que tivermos fotos
+				reais dos projetos entregues, essa página é atualizada com elas.
+			</p>
+		</Fragment>
+		<picture slot="image-container">
+			<img src={withBase('/assets/images/galeria/galeria-7.jpg')} alt="Detalhe de porcelanato" />
+		</picture>
+	</HeroSection>
+
+	<Container>
+		<section class="ambientes__grid">
+			{ambientes.map((amb) => (
+				<div class="ambiente__card" id={amb.id}>
+					<div class="ambiente__image zoom-container">
+						<img src={amb.img} alt={amb.title} loading="lazy" />
+					</div>
+					<div class="ambiente__content">
+						<h2>{amb.title}</h2>
+						<p>{amb.desc}</p>
+						<Button href={whatsappHref(amb.title)} newTab customIcon data-action="open-whatsapp">
+							Quero um projeto assim
+							<Fragment slot="icon">
+								<Icon name="mdi:whatsapp" />
+							</Fragment>
+						</Button>
+					</div>
+				</div>
+			))}
+		</section>
+	</Container>
+</Layout>
+
+<style>
+	.ambientes__grid {
+		margin: var(--section-margin) auto;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: var(--theme-grid-gap);
+	}
+	.ambiente__card {
+		background-color: var(--theme-surface-1);
+		border-radius: var(--theme-shape-radius);
+		overflow: hidden;
+	}
+	.ambiente__image {
+		position: relative;
+		overflow: hidden;
+		aspect-ratio: 4 / 3;
+	}
+	.ambiente__image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+	@media (pointer: fine) {
+		.ambiente__image {
+			cursor: zoom-in;
+		}
+		.ambiente__image img {
+			transition: transform 0.25s ease-out;
+			will-change: transform;
+		}
+		.ambiente__image.zoom-active img {
+			transform: scale(2.2);
+		}
+	}
+	.ambiente__content {
+		padding: 1.5rem;
+	}
+	.ambiente__content p {
+		font-size: var(--font-size-sm);
+		opacity: 0.85;
+		margin: 0.5rem 0 1.25rem 0;
+	}
+	@media (max-width: 768px) {
+		.ambientes__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
+
+<script>
+	// Mesmo efeito de zoom na imagem inteira usado na página de Produtos.
+	function setupZoom(container: HTMLElement) {
+		const img = container.querySelector<HTMLElement>('img');
+		if (!img) return;
+
+		function moveZoom(e: MouseEvent) {
+			const rect = container.getBoundingClientRect();
+			if (rect.width === 0 || rect.height === 0) return;
+			const percentX = ((e.clientX - rect.left) / rect.width) * 100;
+			const percentY = ((e.clientY - rect.top) / rect.height) * 100;
+			img!.style.transformOrigin = `${percentX}% ${percentY}%`;
+		}
+
+		container.addEventListener('mouseenter', (e) => {
+			moveZoom(e as MouseEvent);
+			container.classList.add('zoom-active');
+		});
+		container.addEventListener('mousemove', moveZoom);
+		container.addEventListener('mouseleave', () => {
+			container.classList.remove('zoom-active');
+			img.style.transformOrigin = 'center center';
+		});
+	}
+
+	function initZoom() {
+		if (!window.matchMedia('(pointer: fine)').matches) return;
+		document.querySelectorAll<HTMLElement>('.zoom-container').forEach(setupZoom);
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initZoom);
+	} else {
+		initZoom();
+	}
+</script>

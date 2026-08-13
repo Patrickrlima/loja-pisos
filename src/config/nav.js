@@ -4,18 +4,28 @@ import { withBase } from '../utils/url.js';
 // facilitar integração futura com um back-end de categorias dinâmicas.
 export const nav = [
 	{
-		title: 'Laminados',
-		slug: withBase('/produtos#laminado'),
-		category: 'laminados',
+		title: 'Início',
+		slug: withBase('/'),
+		category: 'inicio',
 	},
 	{
-		title: 'Porcelanatos',
-		slug: withBase('/produtos#porcelanato'),
-		category: 'porcelanatos',
+		title: 'Produtos',
+		slug: withBase('/produtos'),
+		category: 'produtos',
 	},
 	{
-		title: 'Vinílicos',
-		slug: withBase('/produtos#vinilico'),
-		category: 'vinilicos',
+		title: 'Sobre nós',
+		slug: withBase('/sobre'),
+		category: 'sobre',
+	},
+	{
+		title: 'Projetos',
+		slug: withBase('/projetos'),
+		category: 'projetos',
+	},
+	{
+		title: 'Contato',
+		slug: withBase('/contato'),
+		category: 'contato',
 	},
 ];

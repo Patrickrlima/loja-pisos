@@ -21,6 +21,14 @@ const image = new URL(Astro.props.image || withBase('/social.png'), Astro.site);
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width" />
 <link rel="icon" type="image/png" href={withBase('/favicon.png')} />
+
+<!-- Google Fonts: Playfair Display (títulos) + Inter (textos) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&family=Playfair+Display:wght@700;900&family=Poppins:wght@800;900&display=swap"
+	rel="stylesheet"
+/>
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />

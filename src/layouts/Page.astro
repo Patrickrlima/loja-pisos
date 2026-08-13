@@ -1,5 +1,6 @@
 ---
 import { Header, Button, Footer } from '@components/odyssey-theme';
+import { Icon } from 'astro-icon/components';
 import Layout from './Base.astro';
 import type { Props as BaseHeadProps } from '../components/head/BaseHead.astro';
 import Logo from '../components/Logo.astro';
@@ -22,14 +23,22 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 			<Logo />
 		</span>
 		<Button slot="action-item" href={whatsappHref} newTab id="btn-orcamento" data-action="open-whatsapp">Orçamento</Button>
+		<Fragment slot="mobile-cta">
+			<Button href={whatsappHref} newTab customIcon id="btn-whatsapp-mobile-menu" data-action="open-whatsapp">
+				Falar no WhatsApp
+				<Fragment slot="icon">
+					<Icon name="mdi:whatsapp" />
+				</Fragment>
+			</Button>
+		</Fragment>
 	</Header>
 	<div id="page">
 		<slot />
 	</div>
 	<Footer
 		slot="footer"
-		background="var(--theme-surface-1)"
-		color="var(--theme-on-surface-1)"
+		background="#141414"
+		color="#f5f2ee"
 		footerLists={footerLists}
 		footerSocials={footerSocials}
 		copyrightName={settings.name}
@@ -38,3 +47,15 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 		<Logo slot="logo" />
 	</Footer>
 </Layout>
+
+<style>
+	/* Botão de orçamento do header em laranja vivo, destacando-se do
+	   preto da navbar (o resto dos botões do site continua na cor
+	   primária padrão). */
+	:global(#btn-orcamento) {
+		background-color: #d9773f;
+	}
+	:global(#btn-orcamento:hover) {
+		background-color: #c2652f;
+	}
+</style>

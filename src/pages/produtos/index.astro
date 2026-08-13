@@ -73,12 +73,16 @@ const categorias = [
 
 	{categorias.map((cat, i) => (
 		<Container>
-			<section id={cat.id} class={`produto__section ${i % 2 === 1 ? 'produto__section--reversed' : ''}`}>
+			<section id={cat.id} class={`produto__section ${i % 2 === 1 ? 'produto__section--reversed' : ''} reveal-on-scroll`}>
 				<div class="produto__image zoom-container">
 					<img src={cat.img} alt={cat.title} loading="lazy" />
 				</div>
 				<div class="produto__text">
-					<h2>{cat.title}</h2>
+					<h2 class="reveal-letters">
+						{cat.title.split('').map((letra, li) => (
+							<span style={`--letter-index: ${li}`}>{letra === ' ' ? '\u00A0' : letra}</span>
+						))}
+					</h2>
 					<p>{cat.desc}</p>
 					<ul class="produto__lista">
 						{cat.itens.map((item) => (
@@ -88,7 +92,7 @@ const categorias = [
 							</li>
 						))}
 					</ul>
-					<Button href={whatsappHref(cat.title)} newTab customIcon>
+					<Button href={whatsappHref(cat.title)} newTab customIcon data-action="open-whatsapp">
 						Orçar {cat.title}
 						<Fragment slot="icon">
 							<Icon name="mdi:whatsapp" />
@@ -101,6 +105,11 @@ const categorias = [
 </Layout>
 
 <style>
+	/* Nomes de categoria: Playfair Display (mesma fonte dos títulos do
+	   site), um pouco maior que o texto padrão do h2. */
+	.produto__text h2 {
+		font-size: var(--font-size-xl);
+	}
 	.produtos-hero__video-wrap {
 		width: 100%;
 		height: 100%;
@@ -162,6 +171,47 @@ const categorias = [
 		color: var(--theme-primary);
 		flex-shrink: 0;
 	}
+	/* Mesmo efeito de revelação da Home: a seção aparece suave quando
+	   entra na tela, e o título surge letra por letra. A foto desliza de
+	   fora da tela até o lugar dela (da direita nas seções normais, da
+	   esquerda nas invertidas, acompanhando o layout). */
+	.reveal-on-scroll {
+		opacity: 0;
+		transition: opacity 0.5s ease;
+	}
+	.reveal-on-scroll.is-visible {
+		opacity: 1;
+	}
+	.produto__image img {
+		transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+		transform: translateX(50%) scale(1.15);
+	}
+	.produto__section--reversed .produto__image img {
+		transform: translateX(-50%) scale(1.15);
+	}
+	.reveal-on-scroll.is-visible .produto__image img {
+		transform: translateX(0) scale(1);
+	}
+	.reveal-letters span {
+		display: inline-block;
+		opacity: 0;
+		transform: translateX(-12px);
+		transition: opacity 0.35s ease, transform 0.35s ease;
+		transition-delay: calc(var(--letter-index) * 35ms);
+	}
+	.reveal-on-scroll.is-visible .reveal-letters span {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.reveal-on-scroll,
+		.reveal-letters span {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
+	}
+
 	@media (max-width: 768px) {
 		.produto__section,
 		.produto__section--reversed .produto__image {
@@ -210,9 +260,35 @@ const categorias = [
 		document.querySelectorAll<HTMLElement>('.zoom-container').forEach(setupZoom);
 	}
 
+	// Ativa a animação de entrada (seção + letras do título) só quando o
+	// elemento aparece na tela ao rolar, uma única vez.
+	function setupReveal() {
+		const els = document.querySelectorAll<HTMLElement>('.reveal-on-scroll');
+		if (!('IntersectionObserver' in window) || els.length === 0) {
+			els.forEach((el) => el.classList.add('is-visible'));
+			return;
+		}
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+		);
+		els.forEach((el) => observer.observe(el));
+	}
+
 	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initZoom);
+		document.addEventListener('DOMContentLoaded', () => {
+			initZoom();
+			setupReveal();
+		});
 	} else {
 		initZoom();
+		setupReveal();
 	}
 </script>

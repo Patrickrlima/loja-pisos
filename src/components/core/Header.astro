@@ -72,6 +72,9 @@ const { navData, rightMenu } = Astro.props;
         </ul>
       </nav>}
     </slot>
+    <div class="header-mobile-cta">
+      <slot name="mobile-cta"></slot>
+    </div>
   </div>
   <div class="header-action-item__container">
     <slot name="action-item">
@@ -86,6 +89,8 @@ const { navData, rightMenu } = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #141414;
+    color: #f5f2ee;
   }
   header.header--right {
     display: grid;
@@ -114,7 +119,7 @@ const { navData, rightMenu } = Astro.props;
     -webkit-tap-highlight-color: transparent;
   }
   #menuButton > span {
-    color: var(--theme-on-bg);
+    color: #f5f2ee;
     vertical-align: middle;
   }
   nav {
@@ -136,6 +141,9 @@ const { navData, rightMenu } = Astro.props;
   nav ul li a:hover {
     opacity: 1;
   }
+  .header-mobile-cta {
+    display: none;
+  }
   @media(max-width: 600px) {
     #menuButton {
       display: block;  
@@ -144,25 +152,55 @@ const { navData, rightMenu } = Astro.props;
     .header-nav__container {
       width: 100%;
       height: 100%;
-      background-color: var(--theme-bg);
+      background-color: #141414;
+      color: #f5f2ee;
       display: none;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      align-items: stretch;
+      justify-content: flex-start;
+      padding-top: 6rem;
       position: fixed;
       inset: 0;
       z-index: 99;
+      overflow-y: auto;
     }
     header[mobile-menu-open] .header-nav__container {
       display: flex;
     }
-    header[mobile-menu-open] nav ul {
-      align-items: center;
-      flex-direction: column;
+    header[mobile-menu-open] nav {
+      width: 100%;
     }
-     header[mobile-menu-open] nav ul li {
-       font-size: var(--font-size-lg);
-       margin-bottom: 1rem;
-     }
+    header[mobile-menu-open] nav ul {
+      align-items: stretch;
+      flex-direction: column;
+      width: 100%;
+      padding: 0 1.5rem;
+    }
+    header[mobile-menu-open] nav ul li {
+      font-size: var(--font-size-lg);
+      margin-bottom: 0;
+      border-bottom: 1px solid rgba(245, 242, 238, 0.12);
+    }
+    header[mobile-menu-open] nav ul li a {
+      display: block;
+      width: 100%;
+      padding: 1.1rem 0.25rem;
+      margin-right: 0;
+      opacity: 1;
+      font-weight: 500;
+      color: #f5f2ee;
+      transition: color 150ms linear;
+    }
+    header[mobile-menu-open] nav ul li a:hover,
+    header[mobile-menu-open] nav ul li a:active {
+      color: #d9773f;
+    }
+    header[mobile-menu-open] .header-mobile-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 2rem 1.5rem 0 1.5rem;
+    }
   }
 </style>

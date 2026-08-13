@@ -42,15 +42,15 @@ const categorias = [
 ];
 
 const galeriaFotos = [
-	{ src: withBase('/assets/images/galeria/galeria-1.jpg'), alt: 'Box de banheiro com porcelanato efeito mármore azul' },
-	{ src: withBase('/assets/images/galeria/galeria-2.jpg'), alt: 'Banheira revestida com porcelanato efeito mármore azul' },
-	{ src: withBase('/assets/images/galeria/galeria-3.jpg'), alt: 'Detalhe de porcelanato efeito mármore branco e dourado' },
-	{ src: withBase('/assets/images/galeria/galeria-4.jpg'), alt: 'Mostruário com diversos modelos de porcelanato' },
+	{ src: withBase('/assets/images/galeria/galeria-1.jpg'), alt: 'Piso externo em blocos de concreto' },
+	{ src: withBase('/assets/images/galeria/galeria-2.jpg'), alt: 'Piso epóxi granilite branco com flocos' },
+	{ src: withBase('/assets/images/galeria/galeria-3.jpg'), alt: 'Piso de granilite em banheiro' },
+	{ src: withBase('/assets/images/galeria/galeria-4.jpg'), alt: 'Corredor com porcelanato efeito mármore branco polido' },
 	{ src: withBase('/assets/images/galeria/galeria-5.jpg'), alt: 'Instalação de porcelanato efeito mármore branco e dourado' },
-	{ src: withBase('/assets/images/galeria/galeria-6.jpg'), alt: 'Corredor com porcelanato efeito mármore branco polido' },
-	{ src: withBase('/assets/images/galeria/galeria-7.jpg'), alt: 'Piso de granilite em banheiro' },
-	{ src: withBase('/assets/images/galeria/galeria-8.jpg'), alt: 'Piso epóxi granilite branco com flocos' },
-	{ src: withBase('/assets/images/galeria/galeria-9.jpg'), alt: 'Piso externo em blocos de concreto' },
+	{ src: withBase('/assets/images/galeria/galeria-6.jpg'), alt: 'Mostruário com diversos modelos de porcelanato' },
+	{ src: withBase('/assets/images/galeria/galeria-7.jpg'), alt: 'Detalhe de porcelanato efeito mármore branco e dourado' },
+	{ src: withBase('/assets/images/galeria/galeria-8.jpg'), alt: 'Banheira revestida com porcelanato efeito mármore azul' },
+	{ src: withBase('/assets/images/galeria/galeria-9.jpg'), alt: 'Box de banheiro com porcelanato efeito mármore azul' },
 ];
 
 const diferenciais = [
@@ -69,11 +69,15 @@ const diferenciais = [
 			<h2>Nossos produtos</h2>
 			<p>Encontre o piso ideal para cada ambiente da sua casa ou do seu projeto.</p>
 			<div class="categorias__grid">
-				{categorias.map((c) => (
-					<a class="categoria__card" href={c.href}>
+				{categorias.map((c, cardIndex) => (
+					<a class="categoria__card reveal-on-scroll" href={c.href} style={`--card-index: ${cardIndex}`}>
 						<img src={c.img} alt={c.title} loading="lazy" />
 						<div class="categoria__content">
-							<h3>{c.title}</h3>
+							<h3 class="reveal-letters">
+								{c.title.split('').map((letra, i) => (
+									<span style={`--letter-index: ${i}`}>{letra === ' ' ? '\u00A0' : letra}</span>
+								))}
+							</h3>
 							<p>{c.desc}</p>
 						</div>
 					</a>
@@ -101,7 +105,7 @@ const diferenciais = [
 					</li>
 				))}
 			</ul>
-			<Button href={whatsappHref} newTab>Peça seu orçamento agora</Button>
+			<Button href={whatsappHref} newTab id="btn-orcamento-secao">Peça seu orçamento agora</Button>
 		</Fragment>
 		<Fragment slot="image-container">
 			<img src={withBase("/assets/images/loja-fachada.jpg")} alt="Fachada da loja" />
@@ -118,10 +122,10 @@ const diferenciais = [
 		</div>
 	</section>
 
-	<CtaCardSection>
+	<CtaCardSection background="#141414" color="#f5f2ee">
 		<h2>Vamos começar seu projeto?</h2>
 		<p>Envie uma foto do ambiente e receba um orçamento personalizado em minutos.</p>
-		<Button href={whatsappHref} newTab customIcon>
+		<Button href={whatsappHref} newTab customIcon data-action="open-whatsapp">
 			Chamar no WhatsApp
 			<Fragment slot="icon">
 				<Icon name="mdi:whatsapp" />
@@ -166,6 +170,49 @@ const diferenciais = [
 	}
 	.categoria__content h3 {
 		margin: 0 0 0.25rem 0;
+		font-family: var(--theme-font-family-serif);
+		font-weight: 700;
+		font-size: var(--font-size-md);
+	}
+	/* Efeito de revelação: o card inteiro sobe e aparece suavemente quando
+	   entra na tela, e as letras do título surgem uma a uma, da esquerda
+	   pra direita. */
+	.reveal-on-scroll {
+		opacity: 0;
+		transition: opacity 0.5s ease;
+		transition-delay: calc(var(--card-index, 0) * 120ms);
+	}
+	.reveal-on-scroll.is-visible {
+		opacity: 1;
+	}
+	/* A imagem desliza de fora da tela (da direita) até o lugar dela,
+	   como se estivesse "entrando" no card. */
+	.categoria__card img {
+		transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+		transition-delay: calc(var(--card-index, 0) * 120ms);
+		transform: translateX(60%) scale(1.15);
+	}
+	.reveal-on-scroll.is-visible img {
+		transform: translateX(0) scale(1);
+	}
+	.reveal-letters span {
+		display: inline-block;
+		opacity: 0;
+		transform: translateX(-12px);
+		transition: opacity 0.35s ease, transform 0.35s ease;
+		transition-delay: calc(var(--letter-index) * 35ms);
+	}
+	.reveal-on-scroll.is-visible .reveal-letters span {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.reveal-on-scroll,
+		.reveal-letters span {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
 	}
 	.categoria__content p {
 		margin: 0;
@@ -247,3 +294,33 @@ const diferenciais = [
 		}
 	}
 </style>
+
+<script>
+	// Ativa a animação de entrada (card + letras) só quando o elemento
+	// realmente aparece na tela ao rolar a página, uma única vez.
+	function setupReveal() {
+		const els = document.querySelectorAll<HTMLElement>('.reveal-on-scroll');
+		if (!('IntersectionObserver' in window) || els.length === 0) {
+			els.forEach((el) => el.classList.add('is-visible'));
+			return;
+		}
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{ threshold: 0.2, rootMargin: '0px 0px -40px 0px' }
+		);
+		els.forEach((el) => observer.observe(el));
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupReveal);
+	} else {
+		setupReveal();
+	}
+</script>

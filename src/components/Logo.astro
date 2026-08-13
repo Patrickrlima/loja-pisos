@@ -3,18 +3,32 @@ import settings from '../config/settings.js';
 import { withBase } from '../utils/url.js';
 ---
 
-<img
-	src={withBase(settings.logo)}
-	alt={settings.name}
-	class="site-logo__img"
-	id="site-logo"
-	data-route="home"
-/>
+<span class="site-logo" id="site-logo" data-route="home">
+	<img
+		src={withBase('/assets/images/icone-classe-a-pisos.png')}
+		alt=""
+		class="site-logo__icon"
+	/>
+	<span class="site-logo__text">{settings.name}</span>
+</span>
 
 <style>
-	.site-logo__img {
+	.site-logo {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: fit-content;
+	}
+	.site-logo__icon {
 		height: clamp(1.75rem, 3vw, 2.25rem);
 		width: auto;
 		display: block;
+	}
+	.site-logo__text {
+		font-family: var(--theme-font-family-serif);
+		font-weight: 700;
+		font-size: clamp(1.1rem, 2vw, 1.4rem);
+		white-space: nowrap;
+		color: inherit;
 	}
 </style>

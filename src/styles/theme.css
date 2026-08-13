@@ -1,17 +1,17 @@
 :root {
-	/* Cores da marca — tons de madeira/terracota. Troque pelas cores da loja quando tiver a identidade visual pronta. */
-	--theme-primary: #8a4b2c;
-	--theme-primary-hover: #713c22;
+	/* Cores da marca — preto + laranja vivo do ícone da logo. */
+	--theme-primary: #1a1a1a;
+	--theme-primary-hover: #000000;
 	--theme-on-primary: #fff;
 
 	--theme-bg: #fffdfb;
-	--theme-on-bg: #2b241f;
+	--theme-on-bg: #1a1a1a;
 
 	--theme-surface-1: #f4ede4;
-	--theme-on-surface-1: #2b241f;
+	--theme-on-surface-1: #1a1a1a;
 
 	--theme-surface-2: #e7d9c6;
-	--theme-on-surface-2: #2b241f;
+	--theme-on-surface-2: #1a1a1a;
 
 	/* Theme Shapes */
 	/* Set this to 0 if you want all of the rounded cards, images, etc to be straight edges */
@@ -31,9 +31,9 @@
 	--theme-blog-post-header-width: 1200px;
 
 	/* Theme Fonts */
-	--theme-font-family-serif: 'Roboto Serif', Georgia, Cambria, 'Times New Roman',
-		Times, serif;
-	--theme-font-family-sans: 'Lato', -apple-system, BlinkMacSystemFont,
+	--theme-font-family-serif: 'Playfair Display', Georgia, Cambria,
+		'Times New Roman', Times, serif;
+	--theme-font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont,
 		sans-serif;
 }
 
