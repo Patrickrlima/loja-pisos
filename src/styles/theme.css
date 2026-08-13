@@ -1,0 +1,39 @@
+:root {
+	/* Cores da marca — tons de madeira/terracota. Troque pelas cores da loja quando tiver a identidade visual pronta. */
+	--theme-primary: #8a4b2c;
+	--theme-primary-hover: #713c22;
+	--theme-on-primary: #fff;
+
+	--theme-bg: #fffdfb;
+	--theme-on-bg: #2b241f;
+
+	--theme-surface-1: #f4ede4;
+	--theme-on-surface-1: #2b241f;
+
+	--theme-surface-2: #e7d9c6;
+	--theme-on-surface-2: #2b241f;
+
+	/* Theme Shapes */
+	/* Set this to 0 if you want all of the rounded cards, images, etc to be straight edges */
+	--theme-shape-radius: clamp(0.5rem, 1rem, 1.5rem);
+	--theme-button-border-radius: 0.5rem;
+
+	/* Theme Transition */
+	--theme-transition: 0.2s ease-in-out;
+
+	/* Theme Layout */
+	--section-margin: 3rem;
+	--theme-grid-gap: 1rem;
+	--container-max-width: 1440px;
+	--container-max-width-narrow: 960px;
+	--container-padding: 0 1rem;
+
+	--theme-blog-post-header-width: 1200px;
+
+	/* Theme Fonts */
+	--theme-font-family-serif: 'Roboto Serif', Georgia, Cambria, 'Times New Roman',
+		Times, serif;
+	--theme-font-family-sans: 'Lato', -apple-system, BlinkMacSystemFont,
+		sans-serif;
+}
+

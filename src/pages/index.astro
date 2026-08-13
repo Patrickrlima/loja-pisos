@@ -1,0 +1,190 @@
+---
+import {
+	Container,
+	Button,
+	StickyTextImageSection,
+	CustomerQuoteSection,
+	CtaCardSection,
+} from '@components/odyssey-theme';
+import { Icon } from 'astro-icon/components';
+
+import Layout from '../layouts/Page.astro';
+import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro';
+import settings from '../config/settings.js';
+
+const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(settings.whatsappMessage)}`;
+
+const categorias = [
+	{
+		title: 'Porcelanatos',
+		desc: 'Acabamento acetinado, polido ou rústico para sala, cozinha e fachadas.',
+		img: '/assets/images/placeholders/categoria-porcelanato.svg',
+		href: '/produtos#porcelanato',
+	},
+	{
+		title: 'Laminados',
+		desc: 'Aconchego e praticidade com o visual da madeira, por um preço acessível.',
+		img: '/assets/images/placeholders/categoria-laminado.svg',
+		href: '/produtos#laminado',
+	},
+	{
+		title: 'Vinílicos',
+		desc: 'Resistente à água, fácil de instalar e ótimo custo-benefício.',
+		img: '/assets/images/placeholders/categoria-vinilico.svg',
+		href: '/produtos#vinilico',
+	},
+	{
+		title: 'Área Externa',
+		desc: 'Pisos antiderrapantes para varandas, piscinas e decks.',
+		img: '/assets/images/placeholders/categoria-externo.svg',
+		href: '/produtos#externo',
+	},
+];
+
+const diferenciais = [
+	{ icon: 'mdi:truck-delivery-outline', title: 'Entrega rápida', desc: 'Entregamos em toda a região com agilidade.' },
+	{ icon: 'mdi:cash-multiple', title: 'Melhor preço', desc: 'Preço de fábrica direto para o consumidor final.' },
+	{ icon: 'mdi:account-hard-hat-outline', title: 'Instalação parceira', desc: 'Indicamos instaladores de confiança para seu projeto.' },
+	{ icon: 'mdi:shield-check-outline', title: 'Garantia de fábrica', desc: 'Todos os produtos com garantia do fabricante.' },
+];
+---
+
+<Layout>
+	<HomeHeroSection />
+
+	<Container>
+		<section class="categorias__section">
+			<h2>Nossos produtos</h2>
+			<p>Encontre o piso ideal para cada ambiente da sua casa ou do seu projeto.</p>
+			<div class="categorias__grid">
+				{categorias.map((c) => (
+					<a class="categoria__card" href={c.href}>
+						<img src={c.img} alt={c.title} loading="lazy" />
+						<div class="categoria__content">
+							<h3>{c.title}</h3>
+							<p>{c.desc}</p>
+						</div>
+					</a>
+				))}
+			</div>
+		</section>
+	</Container>
+
+	<StickyTextImageSection>
+		<Fragment slot="text-container">
+			<h2>Por que comprar na {settings.name}?</h2>
+			<p>
+				Trabalhamos direto com as principais fábricas do setor para trazer
+				o melhor preço, com atendimento próximo e sem enrolação. Você manda uma
+				mensagem, conta o que precisa, e a gente monta o orçamento na hora.
+			</p>
+			<ul class="diferenciais__list">
+				{diferenciais.map((d) => (
+					<li>
+						<Icon name={d.icon} width={28} height={28} />
+						<div>
+							<strong>{d.title}</strong>
+							<p>{d.desc}</p>
+						</div>
+					</li>
+				))}
+			</ul>
+			<Button href={whatsappHref} newTab>Peça seu orçamento agora</Button>
+		</Fragment>
+		<Fragment slot="image-container">
+			<img src="/assets/images/placeholders/loja-fachada.svg" alt="Fachada da loja" />
+		</Fragment>
+	</StickyTextImageSection>
+
+	<CustomerQuoteSection
+		quoteText="Comprei o porcelanato pra minha casa toda e o preço foi bem melhor do que em outras lojas. Entrega rápida e atendimento excelente pelo WhatsApp."
+		customerName="Cliente satisfeito, Cachoeirinha/RS"
+	/>
+
+	<CtaCardSection>
+		<h2>Vamos começar seu projeto?</h2>
+		<p>Envie uma foto do ambiente e receba um orçamento personalizado em minutos.</p>
+		<Button href={whatsappHref} newTab customIcon>
+			Chamar no WhatsApp
+			<Fragment slot="icon">
+				<Icon name="mdi:whatsapp" />
+			</Fragment>
+		</Button>
+	</CtaCardSection>
+</Layout>
+
+<style>
+	.categorias__section {
+		margin: var(--section-margin) auto;
+	}
+	.categorias__section > p {
+		max-width: 40rem;
+	}
+	.categorias__grid {
+		margin-top: 2rem;
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: var(--theme-grid-gap);
+	}
+	.categoria__card {
+		display: block;
+		text-decoration: none;
+		color: inherit;
+		background-color: var(--theme-surface-1);
+		border-radius: var(--theme-shape-radius);
+		overflow: hidden;
+		transition: transform var(--theme-transition);
+	}
+	.categoria__card:hover {
+		transform: translateY(-4px);
+	}
+	.categoria__card img {
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		display: block;
+	}
+	.categoria__content {
+		padding: 1rem;
+	}
+	.categoria__content h3 {
+		margin: 0 0 0.25rem 0;
+	}
+	.categoria__content p {
+		margin: 0;
+		font-size: var(--font-size-sm);
+		opacity: 0.8;
+	}
+	.diferenciais__list {
+		margin: 1.5rem 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+	.diferenciais__list li {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+	}
+	.diferenciais__list li :global(svg) {
+		flex-shrink: 0;
+		color: var(--theme-primary);
+	}
+	.diferenciais__list p {
+		margin: 0.15rem 0 0 0;
+		font-size: var(--font-size-sm);
+		opacity: 0.8;
+	}
+	@media (max-width: 1024px) {
+		.categorias__grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+	@media (max-width: 600px) {
+		.categorias__grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

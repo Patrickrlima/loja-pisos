@@ -1,0 +1,32 @@
+---
+import { Button, Container, TextCardSection } from '@components/odyssey-theme';
+import Layout from '../layouts/Page.astro';
+
+const seo = {
+	title: 'Mensagem enviada | PisoMax',
+	description: 'Recebemos sua mensagem.',
+};
+---
+
+<Layout {seo}>
+	<Container>
+		<TextCardSection>
+			<h1>Mensagem enviada! ✅</h1>
+			<p>Obrigado pelo contato. Nossa equipe vai te responder em breve — se preferir, fale agora mesmo pelo WhatsApp.</p>
+			<div class="cta-buttons__container">
+				<Button href="/">Voltar para a Home</Button>
+			</div>
+		</TextCardSection>
+	</Container>
+</Layout>
+
+<style>
+	.cta-buttons__container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.cta-buttons__container :global(a) {
+		margin-right: 1rem;
+		margin-bottom: 1rem;
+	}
+</style>

@@ -1,0 +1,93 @@
+---
+import ContactForm from '../components/forms/ContactForm.astro';
+import Layout from '../layouts/Page.astro';
+import { Container, Button } from '@components/odyssey-theme';
+import { Icon } from 'astro-icon/components';
+import settings from '../config/settings.js';
+
+const seo = {
+	title: `Contato | ${settings.name}`,
+	description: `Fale com a ${settings.name} pelo WhatsApp, telefone ou e-mail.`,
+};
+
+const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(settings.whatsappMessage)}`;
+---
+
+<Layout seo={seo}>
+	<Container>
+		<section class="contact-hero__section">
+			<div class="contact-hero__text-section">
+				<h1>Fale com a gente</h1>
+				<p>
+					Manda uma mensagem, conta o que você precisa (ambiente, metragem,
+					estilo) e a gente te ajuda a escolher o piso ideal com orçamento
+					rápido.
+				</p>
+				<Button href={whatsappHref} newTab customIcon>
+					Chamar no WhatsApp
+					<Fragment slot="icon">
+						<Icon name="mdi:whatsapp" />
+					</Fragment>
+				</Button>
+				<div class="contact-info">
+					<p><Icon name="mdi:phone-outline" width={20} height={20} /> <a href={`tel:+${settings.whatsappNumber}`}>{settings.phoneDisplay}</a></p>
+					<p><Icon name="mdi:email-outline" width={20} height={20} /> <a href={`mailto:${settings.email}`}>{settings.email}</a></p>
+					<p><Icon name="mdi:map-marker-outline" width={20} height={20} /> {settings.address}</p>
+					<p><Icon name="mdi:clock-outline" width={20} height={20} /> {settings.hours}</p>
+				</div>
+			</div>
+			<div class="col-2__container">
+				<ContactForm />
+			</div>
+		</section>
+	</Container>
+</Layout>
+
+<style>
+	.contact-hero__section {
+		margin: var(--section-margin) auto;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		min-height: calc(80vh - var(--navbar-height));
+		gap: 3rem;
+	}
+	.contact-hero__text-section {
+		padding: 2rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		background-color: var(--theme-surface-1);
+		border-radius: var(--theme-shape-radius);
+	}
+	.contact-hero__text-section :global(.btn) {
+		margin: 1rem 0;
+	}
+	.contact-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.contact-info p {
+		margin: 0;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.contact-info :global(svg) {
+		color: var(--theme-primary);
+		flex-shrink: 0;
+	}
+	.contact-info a {
+		color: inherit;
+	}
+	.col-2__container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	@media (max-width: 768px) {
+		.contact-hero__section {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

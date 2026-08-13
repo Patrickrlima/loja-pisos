@@ -1,0 +1,33 @@
+---
+import { Button, Container, TextCardSection } from '@components/odyssey-theme';
+import Layout from '../layouts/Page.astro';
+
+const seo = {
+	title: 'Página não encontrada | PisoMax',
+	description: 'A página que você procura não existe.',
+};
+---
+
+<Layout {seo}>
+	<Container>
+		<TextCardSection>
+			<h1>404</h1>
+			<h2>Página não encontrada 👀</h2>
+			<p>O link pode ter mudado ou a página não existe mais.</p>
+			<div class="cta-buttons__container">
+				<Button href="/">Voltar para a Home</Button>
+			</div>
+		</TextCardSection>
+	</Container>
+</Layout>
+
+<style>
+	.cta-buttons__container {
+		display: flex;
+		flex-wrap: wrap;
+	}
+	.cta-buttons__container :global(a) {
+		margin-right: 1rem;
+		margin-bottom: 1rem;
+	}
+</style>

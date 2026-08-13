@@ -1,0 +1,137 @@
+---
+import { Container, Button } from '@components/odyssey-theme';
+import { Icon } from 'astro-icon/components';
+import Layout from '../../layouts/Page.astro';
+import HeroSection from '../../components/sections/heros/HeroSection.astro';
+import settings from '../../config/settings.js';
+
+const seo = {
+	title: 'Produtos | PisoMax',
+	description: 'Catálogo de porcelanatos, laminados, vinílicos e pisos para área externa.',
+};
+
+const whatsappHref = (produto) =>
+	`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
+		`Olá! Vim pelo site e quero um orçamento de ${produto}.`
+	)}`;
+
+const categorias = [
+	{
+		id: 'porcelanato',
+		title: 'Porcelanatos',
+		img: '/assets/images/placeholders/categoria-porcelanato.svg',
+		desc: 'Ideal para quem busca durabilidade e sofisticação. Trabalhamos com acabamento acetinado, polido e rústico, em diversos tamanhos de placa, para salas, cozinhas, banheiros e fachadas.',
+		itens: ['Acetinado 60x60', 'Polido 80x80', 'Rústico 45x90', 'Retificado grande formato'],
+	},
+	{
+		id: 'laminado',
+		title: 'Laminados',
+		img: '/assets/images/placeholders/categoria-laminado.svg',
+		desc: 'O visual aconchegante da madeira com instalação rápida (encaixe clicado) e ótimo custo-benefício. Perfeito para quartos, salas e escritórios.',
+		itens: ['Linha Clássica', 'Linha Premium', 'Efeito madeira de demolição', 'Resistente à umidade'],
+	},
+	{
+		id: 'vinilico',
+		title: 'Vinílicos',
+		img: '/assets/images/placeholders/categoria-vinilico.svg',
+		desc: 'Resistente à água, macio ao caminhar e fácil de limpar. Ótima opção para cozinhas, áreas comerciais e ambientes de alto tráfego.',
+		itens: ['Régua vinílica', 'Manta vinílica', 'Persiana / Wall Deck', 'Autocolante e clicado'],
+	},
+	{
+		id: 'externo',
+		title: 'Área Externa',
+		img: '/assets/images/placeholders/categoria-externo.svg',
+		desc: 'Pisos antiderrapantes (PEI/PTV adequados) para varandas, piscinas, decks e calçadas, resistentes à chuva e ao sol.',
+		itens: ['Deck cerâmico', 'Porcelanato antiderrapante', 'Piso atérmico para piscina', 'Pastilhas e cimentícios'],
+	},
+];
+---
+
+<Layout {seo}>
+	<HeroSection>
+		<Fragment slot="text-container">
+			<h1>Nossos Produtos</h1>
+			<p>
+				Confira nossas principais linhas de pisos. Todos os itens abaixo são
+				exemplos — a loja pode substituir por fotos e modelos reais do estoque.
+			</p>
+		</Fragment>
+		<picture slot="image-container">
+			<img src="/assets/images/placeholders/hero-piso-madeira.svg" alt="Catálogo de pisos" />
+		</picture>
+	</HeroSection>
+
+	{categorias.map((cat, i) => (
+		<Container>
+			<section id={cat.id} class={`produto__section ${i % 2 === 1 ? 'produto__section--reversed' : ''}`}>
+				<div class="produto__image">
+					<img src={cat.img} alt={cat.title} loading="lazy" />
+				</div>
+				<div class="produto__text">
+					<h2>{cat.title}</h2>
+					<p>{cat.desc}</p>
+					<ul class="produto__lista">
+						{cat.itens.map((item) => (
+							<li>
+								<Icon name="mdi:check-circle-outline" width={20} height={20} />
+								{item}
+							</li>
+						))}
+					</ul>
+					<Button href={whatsappHref(cat.title)} newTab customIcon>
+						Orçar {cat.title}
+						<Fragment slot="icon">
+							<Icon name="mdi:whatsapp" />
+						</Fragment>
+					</Button>
+				</div>
+			</section>
+		</Container>
+	))}
+</Layout>
+
+<style>
+	.produto__section {
+		margin: calc(var(--section-margin) * 1.5) auto;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		gap: 2rem;
+	}
+	.produto__section--reversed .produto__image {
+		order: 2;
+	}
+	.produto__image img {
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
+		border-radius: var(--theme-shape-radius);
+	}
+	.produto__lista {
+		margin: 1.25rem 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.produto__lista li {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.produto__lista li :global(svg) {
+		color: var(--theme-primary);
+		flex-shrink: 0;
+	}
+	@media (max-width: 768px) {
+		.produto__section,
+		.produto__section--reversed .produto__image {
+			grid-template-columns: 1fr;
+			order: 0;
+		}
+		.produto__section {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

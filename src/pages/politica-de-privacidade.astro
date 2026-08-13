@@ -1,0 +1,53 @@
+---
+import { TextSection } from '@components/odyssey-theme';
+import Layout from '../layouts/Page.astro';
+import settings from '../config/settings.js';
+
+const seo = {
+	title: `Política de Privacidade | ${settings.name}`,
+	description: `Política de privacidade da ${settings.name}.`,
+};
+---
+
+<Layout seo={seo}>
+	<TextSection narrow>
+		<h1>Política de Privacidade</h1>
+
+		<p>
+			A {settings.name} valoriza a privacidade de seus clientes e visitantes.
+			Esta página explica, de forma simples, como coletamos e usamos as
+			informações enviadas por este site.
+		</p>
+
+		<h2>Quais dados coletamos</h2>
+		<p>
+			Coletamos apenas os dados que você nos envia voluntariamente pelo
+			formulário de contato deste site: nome, telefone/WhatsApp, e-mail e a
+			mensagem enviada.
+		</p>
+
+		<h2>Como usamos seus dados</h2>
+		<p>
+			Usamos essas informações exclusivamente para responder à sua solicitação
+			de orçamento ou dúvida, entrando em contato por telefone, WhatsApp ou
+			e-mail. Não vendemos nem compartilhamos seus dados com terceiros para
+			fins de marketing.
+		</p>
+
+		<h2>Armazenamento</h2>
+		<p>
+			As mensagens enviadas pelo formulário de contato ficam armazenadas na
+			plataforma de hospedagem do site e podem ser encaminhadas por e-mail para
+			a equipe da loja.
+		</p>
+
+		<h2>Seus direitos</h2>
+		<p>
+			Você pode solicitar a qualquer momento a atualização ou exclusão dos seus
+			dados enviados pelo formulário, entrando em contato pelo e-mail{' '}
+			<a href={`mailto:${settings.email}`}>{settings.email}</a>.
+		</p>
+
+		<p><em>Última atualização: substitua esta data quando revisar o texto.</em></p>
+	</TextSection>
+</Layout>

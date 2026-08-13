@@ -1,0 +1,20 @@
+{
+	"name": "loja-de-pisos",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro build",
+		"preview": "astro preview",
+		"format": "npx prettier -w ."
+	},
+	"devDependencies": {
+		"@astrojs/sitemap": "^0.1.0",
+		"@iconify-json/ic": "^1.1.17",
+		"@iconify-json/mdi": "^1.1.64",
+		"astro": "^4.15.9",
+		"astro-icon": "^1.1.0",
+		"prettier-plugin-astro": "^0.0.12"
+	}
+}

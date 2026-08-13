@@ -1,0 +1,78 @@
+---
+import { Icon } from 'astro-icon/components';
+import { Container, Button } from '@components/odyssey-theme';
+import settings from '../../../config/settings.js';
+
+const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(settings.whatsappMessage)}`;
+---
+
+<Container>
+	<section class="hero-section__section">
+		<div class="hero-section__text">
+				<h1>Piso novo, orçamento no mesmo dia</h1>
+				<p>
+					Porcelanatos, laminados, vinílicos e pisos para área externa com entrega
+					rápida e o melhor preço da região. Fale agora com a gente pelo WhatsApp
+					e receba seu orçamento sem compromisso.
+				</p>
+				<div class="hero-btns__container">
+					<Button href={whatsappHref} customIcon newTab
+						>Falar no WhatsApp
+            <Fragment slot="icon">
+              <Icon name="mdi:whatsapp"/>
+            </Fragment>
+            </Button
+					>
+					<Button href="/produtos" unelevated>Ver produtos</Button>
+				</div>
+		</div>
+		<div class="hero-section__image">
+				<picture>
+					<img
+						src="/assets/images/placeholders/hero-piso-madeira.svg"
+						alt="Piso de madeira instalado"
+						id="home-hero-image"
+					/>
+				</picture>
+		</div>
+	</section>
+</Container>
+
+<style>
+	.hero-section__section {
+		margin: var(--section-margin) auto;
+		min-height: clamp(70vh, 90vw, calc(90vh - var(--navbar-height)));
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		align-items: center;
+		gap: 1rem;
+	}
+	.hero-section__text {
+		justify-self: center;
+		max-width: 28rem;
+	}
+	.hero-btns__container {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+	.hero-btns__container {
+		margin-right: 1rem;
+	}
+	.hero-section__image {
+		display: flex;
+	}
+	.hero-section__image img {
+		width: 100%;
+		height: 100%;
+		max-height: 80vh;
+		object-fit: cover;
+		border-radius: var(--theme-shape-radius);
+	}
+	@media (max-width: 768px) {
+		.hero-section__section {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

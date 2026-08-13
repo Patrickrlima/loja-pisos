@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" role="img" aria-label="Imagem ilustrativa de piso">
+<defs></defs>
+
+<rect x="0" y="0" width="900" height="600" fill="#e9e4dc"/>
+<rect x="0" y="330.0" width="900" height="270.0" fill="#cbb99a"/>
+<rect x="72.0" y="120.0" width="756.0" height="210.0" fill="#3d3733" rx="10"/>
+<rect x="90.0" y="138.0" width="180.0" height="168.00000000000003" fill="#a9c6d8" opacity="0.85"/>
+<rect x="288.0" y="138.0" width="324.0" height="168.00000000000003" fill="#a9c6d8" opacity="0.85"/>
+<rect x="630.0" y="138.0" width="198.0" height="168.00000000000003" fill="#a9c6d8" opacity="0.85"/>
+
+</svg>

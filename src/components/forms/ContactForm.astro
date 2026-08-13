@@ -1,0 +1,41 @@
+---
+import { Button, FormInput, FormSelect, FormTextarea } from '@components/odyssey-theme';
+
+const selectOptions = [
+  'Ambiente residencial',
+  'Ambiente comercial',
+  'Área externa / Piscina',
+  'Reforma',
+  'Obra nova',
+];
+---
+
+<!--
+  IMPORTANTE: GitHub Pages hospeda só arquivos estáticos, não tem backend próprio pra
+  receber formulário (diferente do Netlify). Por isso este formulário está configurado
+  pra usar o Formspree (grátis até 50 envios/mês, sem precisar de servidor):
+
+  1. Crie uma conta em https://formspree.io
+  2. Crie um formulário novo, copie o endpoint (algo como https://formspree.io/f/xxxxxxx)
+  3. Troque o "SEU-ENDPOINT-AQUI" abaixo pelo endpoint copiado
+
+  O WhatsApp continua sendo o principal caminho de contato do site — o formulário é
+  só um canal extra pra quem prefere não usar o WhatsApp.
+-->
+<form name="Contato" method="POST" action="https://formspree.io/f/SEU-ENDPOINT-AQUI">
+  <FormInput type="text" label="Nome" name="Nome" placeholder="Seu nome" required />
+  <FormInput type="tel" label="WhatsApp" name="Telefone" placeholder="(51) 99999-9999" required />
+  <FormInput type="email" label="E-mail" name="Email" placeholder="seuemail@exemplo.com" required />
+  <FormSelect label="Tipo de ambiente" name="Ambiente" options={selectOptions} />
+  <FormTextarea label="Mensagem" name="Mensagem" placeholder="Conte um pouco sobre o que você precisa..." />
+  <input type="hidden" name="_next" value="/obrigado" />
+  <Button>Enviar mensagem</Button>
+</form>
+
+<style>
+  form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+</style>

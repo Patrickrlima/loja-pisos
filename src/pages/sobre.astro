@@ -1,0 +1,61 @@
+---
+import { TextSection, ThreeColumnTextSection } from '@components/odyssey-theme';
+import Layout from '../layouts/Page.astro';
+import HeroSection from '../components/sections/heros/HeroSection.astro';
+import settings from '../config/settings.js';
+
+const seo = {
+	title: `Sobre | ${settings.name}`,
+	description: `Conheça a história e os valores da ${settings.name}.`,
+};
+---
+
+<Layout {seo}>
+	<HeroSection>
+		<div slot="text-container">
+			<h1>Sobre a {settings.name}</h1>
+			<p>
+				Há mais de 10 anos ajudando famílias e profissionais da construção a
+				encontrar o piso certo, com preço justo e atendimento de verdade.
+				(Texto placeholder — ajuste com a história real da loja.)
+			</p>
+		</div>
+		<picture slot="image-container">
+			<img
+				src="/assets/images/placeholders/loja-fachada.svg"
+				alt="Fachada da loja"
+				id="home-hero-image"
+			/>
+		</picture>
+	</HeroSection>
+
+	<TextSection narrow>
+		<p>
+			A {settings.name} nasceu da vontade de facilitar a vida de quem precisa reformar
+			ou construir: um lugar onde o cliente encontra variedade, preço competitivo e
+			gente que entende do assunto para ajudar na escolha certa. Hoje atendemos
+			famílias, arquitetos, construtoras e lojistas em toda a região.
+		</p>
+		<p>
+			Trabalhamos direto com as principais fábricas de porcelanato, laminado e
+			piso vinílico do país, o que garante preço de fábrica e prazo de entrega
+			mais curto. Cada pedido é acompanhado de perto, do orçamento até a entrega
+			na obra.
+		</p>
+	</TextSection>
+
+	<ThreeColumnTextSection>
+		<Fragment slot="column-1-body">
+			<h3>Missão</h3>
+			<p>Entregar o piso certo, no prazo certo, pelo preço justo.</p>
+		</Fragment>
+		<Fragment slot="column-2-body">
+			<h3>Visão</h3>
+			<p>Ser a primeira opção em pisos e revestimentos da região.</p>
+		</Fragment>
+		<Fragment slot="column-3-body">
+			<h3>Valores</h3>
+			<p>Transparência, agilidade e respeito com cada cliente.</p>
+		</Fragment>
+	</ThreeColumnTextSection>
+</Layout>
