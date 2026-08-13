@@ -1,78 +1,116 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { Container, Button } from '@components/odyssey-theme';
+import { Button } from '@components/odyssey-theme';
 import settings from '../../../config/settings.js';
 
 const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(settings.whatsappMessage)}`;
 ---
 
-<Container>
-	<section class="hero-section__section">
-		<div class="hero-section__text">
-				<h1>Piso novo, orçamento no mesmo dia</h1>
-				<p>
-					Porcelanatos, laminados, vinílicos e pisos para área externa com entrega
-					rápida e o melhor preço da região. Fale agora com a gente pelo WhatsApp
-					e receba seu orçamento sem compromisso.
-				</p>
-				<div class="hero-btns__container">
-					<Button href={whatsappHref} customIcon newTab
-						>Falar no WhatsApp
-            <Fragment slot="icon">
-              <Icon name="mdi:whatsapp"/>
-            </Fragment>
-            </Button
-					>
-					<Button href="/produtos" unelevated>Ver produtos</Button>
-				</div>
+<section class="hero" id="hero-home" data-section="hero">
+	<img
+		class="hero__bg"
+		src="/assets/images/hero-casa-piscina.jpg"
+		alt="Ambiente de alto padrão com piso de porcelanato"
+		fetchpriority="high"
+	/>
+	<div class="hero__overlay"></div>
+
+	<div class="hero__content">
+		<img class="hero__logo" src={settings.logo} alt={settings.name} />
+		<h1>Piso de alto padrão, direto de fábrica</h1>
+		<p>
+			Porcelanatos, laminados e vinílicos com acabamento premium para
+			transformar qualquer ambiente. Fale agora com a gente e receba um
+			orçamento sem compromisso.
+		</p>
+		<div class="hero__btns" data-hero-actions>
+			<Button href={whatsappHref} newTab customIcon id="hero-cta-whatsapp" data-action="open-whatsapp"
+				>Falar no WhatsApp
+				<Fragment slot="icon">
+					<Icon name="mdi:whatsapp" />
+				</Fragment>
+			</Button>
+			<Button href="/produtos" outlined onPrimary id="hero-cta-produtos" data-route="produtos">Ver produtos</Button>
 		</div>
-		<div class="hero-section__image">
-				<picture>
-					<img
-						src="/assets/images/placeholders/hero-piso-madeira.svg"
-						alt="Piso de madeira instalado"
-						id="home-hero-image"
-					/>
-				</picture>
-		</div>
-	</section>
-</Container>
+	</div>
+</section>
 
 <style>
-	.hero-section__section {
-		margin: var(--section-margin) auto;
-		min-height: clamp(70vh, 90vw, calc(90vh - var(--navbar-height)));
-		display: grid;
-		grid-template-columns: 1fr 1fr;
+	.hero {
+		position: relative;
+		width: 100%;
+		min-height: clamp(70vh, 90vw, 92vh);
+		display: flex;
 		align-items: center;
-		gap: 1rem;
+		overflow: hidden;
 	}
-	.hero-section__text {
-		justify-self: center;
-		max-width: 28rem;
+	.hero__bg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		z-index: 0;
 	}
-	.hero-btns__container {
+	.hero__overlay {
+		position: absolute;
+		inset: 0;
+		z-index: 1;
+		background: linear-gradient(
+			90deg,
+			rgba(20, 14, 10, 0.78) 0%,
+			rgba(20, 14, 10, 0.55) 45%,
+			rgba(20, 14, 10, 0.15) 100%
+		);
+	}
+	.hero__content {
+		position: relative;
+		z-index: 2;
+		max-width: 34rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem;
+		color: #fff;
+	}
+	.hero__logo {
+		height: 3.5rem;
+		width: auto;
+		margin-bottom: 1.5rem;
+		filter: brightness(0) invert(1);
+	}
+	.hero__content h1 {
+		color: #fff;
+		font-size: clamp(2rem, 4vw, 3rem);
+		line-height: 1.15;
+	}
+	.hero__content p {
+		color: rgba(255, 255, 255, 0.88);
+	}
+	.hero__btns {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
 		gap: 1rem;
+		margin-top: 1.5rem;
 	}
-	.hero-btns__container {
-		margin-right: 1rem;
+	.hero__btns :global(#hero-cta-produtos.btn--outlined) {
+		color: #fff;
+		border-color: #fff;
 	}
-	.hero-section__image {
-		display: flex;
+	.hero__btns :global(#hero-cta-produtos.btn--outlined:hover) {
+		background-color: #fff;
+		color: var(--theme-primary);
 	}
-	.hero-section__image img {
-		width: 100%;
-		height: 100%;
-		max-height: 80vh;
-		object-fit: cover;
-		border-radius: var(--theme-shape-radius);
-	}
-	@media (max-width: 768px) {
-		.hero-section__section {
-			grid-template-columns: 1fr;
+	@media (max-width: 600px) {
+		.hero__overlay {
+			background: linear-gradient(
+				180deg,
+				rgba(20, 14, 10, 0.35) 0%,
+				rgba(20, 14, 10, 0.85) 65%
+			);
+		}
+		.hero__content {
+			padding: 1.5rem 1rem;
+			max-width: 100%;
 		}
 	}
 </style>

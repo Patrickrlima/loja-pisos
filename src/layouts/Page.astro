@@ -21,7 +21,7 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 		<span slot="logo">
 			<Logo />
 		</span>
-		<Button slot="action-item" href={whatsappHref} newTab>Peça um orçamento</Button>
+		<Button slot="action-item" href={whatsappHref} newTab id="btn-orcamento" data-action="open-whatsapp">Orçamento</Button>
 	</Header>
 	<div id="page">
 		<slot />

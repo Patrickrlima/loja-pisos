@@ -56,10 +56,17 @@ const { navData, rightMenu } = Astro.props;
   </div>
   <div class="header-nav__container">
     <slot name="nav">
-      {navData && <nav>
+      {navData && <nav id="main-nav" data-nav="categorias">
         <ul>
           {navData.map(navItem => (
-            (<li><a href={navItem.slug} >{navItem.title}</a></li>)
+            (<li>
+              <a
+                href={navItem.slug}
+                id={`nav-link-${navItem.category ?? navItem.slug}`}
+                data-category={navItem.category}
+                data-nav-item
+              >{navItem.title}</a>
+            </li>)
           ))}
         </ul>
       </nav>}

@@ -1,18 +1,19 @@
+// Links da navbar. "category" é usado como hook (id/data-attribute) para
+// facilitar integração futura com um back-end de categorias dinâmicas.
 export const nav = [
 	{
-		title: 'Home',
-		slug: '/',
+		title: 'Laminados',
+		slug: '/produtos#laminado',
+		category: 'laminados',
 	},
 	{
-		title: 'Produtos',
-		slug: '/produtos',
+		title: 'Porcelanatos',
+		slug: '/produtos#porcelanato',
+		category: 'porcelanatos',
 	},
 	{
-		title: 'Sobre',
-		slug: '/sobre',
-	},
-	{
-		title: 'Contato',
-		slug: '/contato',
+		title: 'Vinílicos',
+		slug: '/produtos#vinilico',
+		category: 'vinilicos',
 	},
 ];

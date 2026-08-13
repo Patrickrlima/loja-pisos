@@ -1,22 +1,19 @@
 ---
+import settings from '../config/settings.js';
 ---
 
-<p class="site-logo">Piso<span class="site-logo__accent">Max</span></p>
+<img
+	src={settings.logo}
+	alt={settings.name}
+	class="site-logo__img"
+	id="site-logo"
+	data-route="home"
+/>
 
 <style>
-	.site-logo {
-		width: fit-content;
-		margin: 0;
-		font-family: var(--theme-font-family-serif);
-		font-size: var(--font-size-md);
-		font-weight: 700;
-		color: inherit;
-	}
-	.site-logo__accent {
-		color: var(--theme-primary);
-	}
-	.site-logo:hover {
-		text-decoration: underline;
-		cursor: pointer;
+	.site-logo__img {
+		height: clamp(2.25rem, 4vw, 3rem);
+		width: auto;
+		display: block;
 	}
 </style>
