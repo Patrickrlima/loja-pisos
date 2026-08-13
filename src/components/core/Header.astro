@@ -1,5 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components'
+import { withBase } from '../../utils/url.js';
 const { navData, rightMenu } = Astro.props;
 ---
 
@@ -49,7 +50,7 @@ const { navData, rightMenu } = Astro.props;
       <Icon name="ic:baseline-close" width="24px" height="24px" />
     </span>
   </button>
-  <a class="header-logo__link" href="/">
+  <a class="header-logo__link" href={withBase('/')}>
     <slot name="logo">
     </slot>
   </a>
@@ -81,7 +82,7 @@ const { navData, rightMenu } = Astro.props;
 <style>
   header {
     width: 100%;
-    padding: 0.6rem 0.75rem;
+    padding: 0.38rem 0.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

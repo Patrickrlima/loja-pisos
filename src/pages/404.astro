@@ -1,9 +1,10 @@
 ---
 import { Button, Container, TextCardSection } from '@components/odyssey-theme';
 import Layout from '../layouts/Page.astro';
+import { withBase } from '../utils/url.js';
 
 const seo = {
-	title: 'Página não encontrada | PisoMax',
+	title: 'Página não encontrada | Classe A Pisos',
 	description: 'A página que você procura não existe.',
 };
 ---
@@ -15,7 +16,7 @@ const seo = {
 			<h2>Página não encontrada 👀</h2>
 			<p>O link pode ter mudado ou a página não existe mais.</p>
 			<div class="cta-buttons__container">
-				<Button href="/">Voltar para a Home</Button>
+				<Button href={withBase('/')}>Voltar para a Home</Button>
 			</div>
 		</TextCardSection>
 	</Container>

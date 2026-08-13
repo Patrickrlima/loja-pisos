@@ -2,21 +2,26 @@
 import { Icon } from 'astro-icon/components';
 import { Button } from '@components/odyssey-theme';
 import settings from '../../../config/settings.js';
+import { withBase } from '../../../utils/url.js';
 
 const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(settings.whatsappMessage)}`;
 ---
 
 <section class="hero" id="hero-home" data-section="hero">
-	<img
+	<video
 		class="hero__bg"
-		src="/assets/images/hero-casa-piscina.jpg"
-		alt="Ambiente de alto padrão com piso de porcelanato"
-		fetchpriority="high"
-	/>
+		src={withBase('/assets/images/hero-video.mp4')}
+		poster={withBase('/assets/images/hero-video-poster.jpg')}
+		autoplay
+		muted
+		loop
+		playsinline
+		preload="auto"
+	></video>
 	<div class="hero__overlay"></div>
 
 	<div class="hero__content">
-		<img class="hero__logo" src={settings.logo} alt={settings.name} />
+		<img class="hero__logo" src={withBase('/assets/images/logo-classe-a-pisos-hero.png')} alt={settings.name} />
 		<div class="hero__btns" data-hero-actions>
 			<Button href={whatsappHref} newTab customIcon id="hero-cta-whatsapp" data-action="open-whatsapp"
 				>Falar no WhatsApp
@@ -24,7 +29,7 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 					<Icon name="mdi:whatsapp" />
 				</Fragment>
 			</Button>
-			<Button href="/produtos" outlined onPrimary id="hero-cta-produtos" data-route="produtos">Ver produtos</Button>
+			<Button href={withBase('/produtos')} outlined onPrimary id="hero-cta-produtos" data-route="produtos">Ver produtos</Button>
 		</div>
 	</div>
 </section>
@@ -51,30 +56,36 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 		inset: 0;
 		z-index: 1;
 		background: linear-gradient(
-			90deg,
-			rgba(20, 14, 10, 0.72) 0%,
-			rgba(20, 14, 10, 0.45) 45%,
-			rgba(20, 14, 10, 0.15) 100%
+			180deg,
+			rgba(15, 12, 10, 0.35) 0%,
+			rgba(15, 12, 10, 0.42) 55%,
+			rgba(15, 12, 10, 0.65) 100%
 		);
 	}
 	.hero__content {
 		position: relative;
 		z-index: 2;
+		width: 100%;
 		max-width: 34rem;
 		margin: 0 auto;
 		padding: 2rem 1.5rem;
 		color: #fff;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
 	}
 	.hero__logo {
 		display: block;
-		height: clamp(7rem, 16vw, 11rem);
-		width: auto;
-		margin-bottom: 2rem;
-		filter: brightness(0) invert(1);
+		width: min(494px, 80vw);
+		height: auto;
+		margin: 0 auto 2rem auto;
+		filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
 	}
 	.hero__btns {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		flex-wrap: wrap;
 		gap: 1rem;
 	}
@@ -87,13 +98,6 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 		color: var(--theme-primary);
 	}
 	@media (max-width: 600px) {
-		.hero__overlay {
-			background: linear-gradient(
-				180deg,
-				rgba(20, 14, 10, 0.35) 0%,
-				rgba(20, 14, 10, 0.85) 65%
-			);
-		}
 		.hero__content {
 			padding: 1.5rem 1rem;
 			max-width: 100%;

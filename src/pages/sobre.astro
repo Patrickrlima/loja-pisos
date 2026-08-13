@@ -3,6 +3,7 @@ import { TextSection, ThreeColumnTextSection } from '@components/odyssey-theme';
 import Layout from '../layouts/Page.astro';
 import HeroSection from '../components/sections/heros/HeroSection.astro';
 import settings from '../config/settings.js';
+import { withBase } from '../utils/url.js';
 
 const seo = {
 	title: `Sobre | ${settings.name}`,
@@ -22,7 +23,7 @@ const seo = {
 		</div>
 		<picture slot="image-container">
 			<img
-				src="/assets/images/placeholders/loja-fachada.svg"
+				src={withBase("/assets/images/loja-fachada.jpg")}
 				alt="Fachada da loja"
 				id="home-hero-image"
 			/>

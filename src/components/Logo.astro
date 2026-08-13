@@ -1,9 +1,10 @@
 ---
 import settings from '../config/settings.js';
+import { withBase } from '../utils/url.js';
 ---
 
 <img
-	src={settings.logo}
+	src={withBase(settings.logo)}
 	alt={settings.name}
 	class="site-logo__img"
 	id="site-logo"

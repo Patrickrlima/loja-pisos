@@ -1,9 +1,10 @@
 ---
 import { Button, Container, TextCardSection } from '@components/odyssey-theme';
 import Layout from '../layouts/Page.astro';
+import { withBase } from '../utils/url.js';
 
 const seo = {
-	title: 'Mensagem enviada | PisoMax',
+	title: 'Mensagem enviada | Classe A Pisos',
 	description: 'Recebemos sua mensagem.',
 };
 ---
@@ -14,7 +15,7 @@ const seo = {
 			<h1>Mensagem enviada! ✅</h1>
 			<p>Obrigado pelo contato. Nossa equipe vai te responder em breve — se preferir, fale agora mesmo pelo WhatsApp.</p>
 			<div class="cta-buttons__container">
-				<Button href="/">Voltar para a Home</Button>
+				<Button href={withBase('/')}>Voltar para a Home</Button>
 			</div>
 		</TextCardSection>
 	</Container>

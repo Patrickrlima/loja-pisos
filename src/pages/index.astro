@@ -3,7 +3,6 @@ import {
 	Container,
 	Button,
 	StickyTextImageSection,
-	CustomerQuoteSection,
 	CtaCardSection,
 } from '@components/odyssey-theme';
 import { Icon } from 'astro-icon/components';
@@ -11,6 +10,7 @@ import { Icon } from 'astro-icon/components';
 import Layout from '../layouts/Page.astro';
 import HomeHeroSection from '../components/sections/heros/HomeHeroSection.astro';
 import settings from '../config/settings.js';
+import { withBase } from '../utils/url.js';
 
 const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(settings.whatsappMessage)}`;
 
@@ -18,27 +18,39 @@ const categorias = [
 	{
 		title: 'Porcelanatos',
 		desc: 'Acabamento acetinado, polido ou rústico para sala, cozinha e fachadas.',
-		img: '/assets/images/placeholders/categoria-porcelanato.svg',
-		href: '/produtos#porcelanato',
+		img: withBase('/assets/images/produto-porcelanato.jpg'),
+		href: withBase('/produtos#porcelanato'),
 	},
 	{
 		title: 'Laminados',
 		desc: 'Aconchego e praticidade com o visual da madeira, por um preço acessível.',
-		img: '/assets/images/placeholders/categoria-laminado.svg',
-		href: '/produtos#laminado',
+		img: withBase('/assets/images/produto-laminado.jpg'),
+		href: withBase('/produtos#laminado'),
 	},
 	{
 		title: 'Vinílicos',
 		desc: 'Resistente à água, fácil de instalar e ótimo custo-benefício.',
-		img: '/assets/images/placeholders/categoria-vinilico.svg',
-		href: '/produtos#vinilico',
+		img: withBase('/assets/images/produto-vinilico.jpg'),
+		href: withBase('/produtos#vinilico'),
 	},
 	{
 		title: 'Área Externa',
 		desc: 'Pisos antiderrapantes para varandas, piscinas e decks.',
-		img: '/assets/images/placeholders/categoria-externo.svg',
-		href: '/produtos#externo',
+		img: withBase('/assets/images/produto-externo.jpg'),
+		href: withBase('/produtos#externo'),
 	},
+];
+
+const galeriaFotos = [
+	{ src: withBase('/assets/images/galeria/galeria-1.jpg'), alt: 'Box de banheiro com porcelanato efeito mármore azul' },
+	{ src: withBase('/assets/images/galeria/galeria-2.jpg'), alt: 'Banheira revestida com porcelanato efeito mármore azul' },
+	{ src: withBase('/assets/images/galeria/galeria-3.jpg'), alt: 'Detalhe de porcelanato efeito mármore branco e dourado' },
+	{ src: withBase('/assets/images/galeria/galeria-4.jpg'), alt: 'Mostruário com diversos modelos de porcelanato' },
+	{ src: withBase('/assets/images/galeria/galeria-5.jpg'), alt: 'Instalação de porcelanato efeito mármore branco e dourado' },
+	{ src: withBase('/assets/images/galeria/galeria-6.jpg'), alt: 'Corredor com porcelanato efeito mármore branco polido' },
+	{ src: withBase('/assets/images/galeria/galeria-7.jpg'), alt: 'Piso de granilite em banheiro' },
+	{ src: withBase('/assets/images/galeria/galeria-8.jpg'), alt: 'Piso epóxi granilite branco com flocos' },
+	{ src: withBase('/assets/images/galeria/galeria-9.jpg'), alt: 'Piso externo em blocos de concreto' },
 ];
 
 const diferenciais = [
@@ -92,14 +104,19 @@ const diferenciais = [
 			<Button href={whatsappHref} newTab>Peça seu orçamento agora</Button>
 		</Fragment>
 		<Fragment slot="image-container">
-			<img src="/assets/images/placeholders/loja-fachada.svg" alt="Fachada da loja" />
+			<img src={withBase("/assets/images/loja-fachada.jpg")} alt="Fachada da loja" />
 		</Fragment>
 	</StickyTextImageSection>
 
-	<CustomerQuoteSection
-		quoteText="Comprei o porcelanato pra minha casa toda e o preço foi bem melhor do que em outras lojas. Entrega rápida e atendimento excelente pelo WhatsApp."
-		customerName="Cliente satisfeito, Cachoeirinha/RS"
-	/>
+	<section class="photo-strip" aria-label="Fotos de produtos e ambientes">
+		<div class="photo-strip__track">
+			{[...galeriaFotos, ...galeriaFotos].map((foto) => (
+				<div class="photo-strip__item">
+					<img src={foto.src} alt={foto.alt} loading="lazy" />
+				</div>
+			))}
+		</div>
+	</section>
 
 	<CtaCardSection>
 		<h2>Vamos começar seu projeto?</h2>
@@ -185,6 +202,48 @@ const diferenciais = [
 	@media (max-width: 600px) {
 		.categorias__grid {
 			grid-template-columns: 1fr;
+		}
+	}
+	.photo-strip {
+		margin: calc(var(--section-margin) * 1.5) 0;
+		overflow: hidden;
+		width: 100%;
+	}
+	.photo-strip__track {
+		display: flex;
+		width: max-content;
+		animation: photo-strip-scroll 32s linear infinite;
+	}
+	.photo-strip:hover .photo-strip__track {
+		animation-play-state: paused;
+	}
+	.photo-strip__item {
+		flex-shrink: 0;
+		width: clamp(180px, 18vw, 260px);
+		aspect-ratio: 3 / 4;
+		margin-right: 1rem;
+		border-radius: var(--theme-shape-radius);
+		overflow: hidden;
+	}
+	.photo-strip__item img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+	@keyframes photo-strip-scroll {
+		from {
+			transform: translateX(0);
+		}
+		to {
+			/* Anda exatamente metade da faixa (o outro metade é a cópia
+			   duplicada), criando um loop contínuo e imperceptível. */
+			transform: translateX(-50%);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.photo-strip__track {
+			animation: none;
 		}
 	}
 </style>

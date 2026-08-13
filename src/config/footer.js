@@ -1,3 +1,5 @@
+import { withBase } from '../utils/url.js';
+
 export const footerSocials = [
 	{
 		name: 'WhatsApp',
@@ -20,18 +22,18 @@ export const footerLists = [
 	{
 		title: 'Produtos',
 		items: [
-			{ title: 'Porcelanatos', slug: '/produtos#porcelanato' },
-			{ title: 'Laminados', slug: '/produtos#laminado' },
-			{ title: 'Vinílicos', slug: '/produtos#vinilico' },
-			{ title: 'Área externa', slug: '/produtos#externo' },
+			{ title: 'Porcelanatos', slug: withBase('/produtos#porcelanato') },
+			{ title: 'Laminados', slug: withBase('/produtos#laminado') },
+			{ title: 'Vinílicos', slug: withBase('/produtos#vinilico') },
+			{ title: 'Área externa', slug: withBase('/produtos#externo') },
 		],
 	},
 	{
 		title: 'Empresa',
 		items: [
-			{ title: 'Sobre nós', slug: '/sobre' },
-			{ title: 'Contato', slug: '/contato' },
-			{ title: 'Política de Privacidade', slug: '/politica-de-privacidade' },
+			{ title: 'Sobre nós', slug: withBase('/sobre') },
+			{ title: 'Contato', slug: withBase('/contato') },
+			{ title: 'Política de Privacidade', slug: withBase('/politica-de-privacidade') },
 		],
 	},
 ];

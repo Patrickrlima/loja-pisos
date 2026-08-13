@@ -4,9 +4,10 @@ import { Icon } from 'astro-icon/components';
 import Layout from '../../layouts/Page.astro';
 import HeroSection from '../../components/sections/heros/HeroSection.astro';
 import settings from '../../config/settings.js';
+import { withBase } from '../../utils/url.js';
 
 const seo = {
-	title: 'Produtos | PisoMax',
+	title: `Produtos | ${settings.name}`,
 	description: 'Catálogo de porcelanatos, laminados, vinílicos e pisos para área externa.',
 };
 
@@ -19,28 +20,28 @@ const categorias = [
 	{
 		id: 'porcelanato',
 		title: 'Porcelanatos',
-		img: '/assets/images/placeholders/categoria-porcelanato.svg',
+		img: withBase('/assets/images/produto-porcelanato.jpg'),
 		desc: 'Ideal para quem busca durabilidade e sofisticação. Trabalhamos com acabamento acetinado, polido e rústico, em diversos tamanhos de placa, para salas, cozinhas, banheiros e fachadas.',
 		itens: ['Acetinado 60x60', 'Polido 80x80', 'Rústico 45x90', 'Retificado grande formato'],
 	},
 	{
 		id: 'laminado',
 		title: 'Laminados',
-		img: '/assets/images/placeholders/categoria-laminado.svg',
+		img: withBase('/assets/images/produto-laminado.jpg'),
 		desc: 'O visual aconchegante da madeira com instalação rápida (encaixe clicado) e ótimo custo-benefício. Perfeito para quartos, salas e escritórios.',
 		itens: ['Linha Clássica', 'Linha Premium', 'Efeito madeira de demolição', 'Resistente à umidade'],
 	},
 	{
 		id: 'vinilico',
 		title: 'Vinílicos',
-		img: '/assets/images/placeholders/categoria-vinilico.svg',
+		img: withBase('/assets/images/produto-vinilico.jpg'),
 		desc: 'Resistente à água, macio ao caminhar e fácil de limpar. Ótima opção para cozinhas, áreas comerciais e ambientes de alto tráfego.',
 		itens: ['Régua vinílica', 'Manta vinílica', 'Persiana / Wall Deck', 'Autocolante e clicado'],
 	},
 	{
 		id: 'externo',
 		title: 'Área Externa',
-		img: '/assets/images/placeholders/categoria-externo.svg',
+		img: withBase('/assets/images/produto-externo.jpg'),
 		desc: 'Pisos antiderrapantes (PEI/PTV adequados) para varandas, piscinas, decks e calçadas, resistentes à chuva e ao sol.',
 		itens: ['Deck cerâmico', 'Porcelanato antiderrapante', 'Piso atérmico para piscina', 'Pastilhas e cimentícios'],
 	},
@@ -56,15 +57,24 @@ const categorias = [
 				exemplos — a loja pode substituir por fotos e modelos reais do estoque.
 			</p>
 		</Fragment>
-		<picture slot="image-container">
-			<img src="/assets/images/placeholders/hero-piso-madeira.svg" alt="Catálogo de pisos" />
-		</picture>
+		<div slot="image-container" class="produtos-hero__video-wrap">
+			<video
+				class="produtos-hero__video"
+				src={withBase('/assets/images/produtos-video.mp4')}
+				poster={withBase('/assets/images/produtos-video-poster.jpg')}
+				autoplay
+				muted
+				loop
+				playsinline
+				preload="auto"
+			></video>
+		</div>
 	</HeroSection>
 
 	{categorias.map((cat, i) => (
 		<Container>
 			<section id={cat.id} class={`produto__section ${i % 2 === 1 ? 'produto__section--reversed' : ''}`}>
-				<div class="produto__image">
+				<div class="produto__image zoom-container">
 					<img src={cat.img} alt={cat.title} loading="lazy" />
 				</div>
 				<div class="produto__text">
@@ -91,6 +101,18 @@ const categorias = [
 </Layout>
 
 <style>
+	.produtos-hero__video-wrap {
+		width: 100%;
+		height: 100%;
+	}
+	.produtos-hero__video {
+		width: 100%;
+		height: 100%;
+		max-height: 80vh;
+		object-fit: cover;
+		border-radius: var(--theme-shape-radius);
+		display: block;
+	}
 	.produto__section {
 		margin: calc(var(--section-margin) * 1.5) auto;
 		display: grid;
@@ -106,6 +128,22 @@ const categorias = [
 		aspect-ratio: 4 / 3;
 		object-fit: cover;
 		border-radius: var(--theme-shape-radius);
+	}
+	.zoom-container {
+		position: relative;
+		overflow: hidden;
+	}
+	@media (pointer: fine) {
+		.zoom-container {
+			cursor: zoom-in;
+		}
+		.zoom-container img {
+			transition: transform 0.25s ease-out;
+			will-change: transform;
+		}
+		.zoom-container.zoom-active img {
+			transform: scale(2.4);
+		}
 	}
 	.produto__lista {
 		margin: 1.25rem 0;
@@ -135,3 +173,46 @@ const categorias = [
 		}
 	}
 </style>
+
+<script>
+	// Efeito de zoom na imagem inteira ao passar o mouse: a foto amplia
+	// e acompanha a posição do cursor, como se você tivesse "entrando"
+	// nela. Só ativa em dispositivos com mouse de precisão (desktop) —
+	// no celular/touch a imagem continua normal, sem zoom.
+
+	function setupZoom(container: HTMLElement) {
+		const img = container.querySelector<HTMLElement>('img');
+		if (!img) return;
+
+		function moveZoom(e: MouseEvent) {
+			const rect = container.getBoundingClientRect();
+			if (rect.width === 0 || rect.height === 0) return;
+
+			const percentX = ((e.clientX - rect.left) / rect.width) * 100;
+			const percentY = ((e.clientY - rect.top) / rect.height) * 100;
+
+			img!.style.transformOrigin = `${percentX}% ${percentY}%`;
+		}
+
+		container.addEventListener('mouseenter', (e) => {
+			moveZoom(e as MouseEvent);
+			container.classList.add('zoom-active');
+		});
+		container.addEventListener('mousemove', moveZoom);
+		container.addEventListener('mouseleave', () => {
+			container.classList.remove('zoom-active');
+			img.style.transformOrigin = 'center center';
+		});
+	}
+
+	function initZoom() {
+		if (!window.matchMedia('(pointer: fine)').matches) return;
+		document.querySelectorAll<HTMLElement>('.zoom-container').forEach(setupZoom);
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initZoom);
+	} else {
+		initZoom();
+	}
+</script>
