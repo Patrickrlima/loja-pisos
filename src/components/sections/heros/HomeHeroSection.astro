@@ -17,12 +17,6 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 
 	<div class="hero__content">
 		<img class="hero__logo" src={settings.logo} alt={settings.name} />
-		<h1>Piso de alto padrão, direto de fábrica</h1>
-		<p>
-			Porcelanatos, laminados e vinílicos com acabamento premium para
-			transformar qualquer ambiente. Fale agora com a gente e receba um
-			orçamento sem compromisso.
-		</p>
 		<div class="hero__btns" data-hero-actions>
 			<Button href={whatsappHref} newTab customIcon id="hero-cta-whatsapp" data-action="open-whatsapp"
 				>Falar no WhatsApp
@@ -58,8 +52,8 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 		z-index: 1;
 		background: linear-gradient(
 			90deg,
-			rgba(20, 14, 10, 0.78) 0%,
-			rgba(20, 14, 10, 0.55) 45%,
+			rgba(20, 14, 10, 0.72) 0%,
+			rgba(20, 14, 10, 0.45) 45%,
 			rgba(20, 14, 10, 0.15) 100%
 		);
 	}
@@ -72,25 +66,17 @@ const whatsappHref = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIC
 		color: #fff;
 	}
 	.hero__logo {
-		height: 3.5rem;
+		display: block;
+		height: clamp(7rem, 16vw, 11rem);
 		width: auto;
-		margin-bottom: 1.5rem;
+		margin-bottom: 2rem;
 		filter: brightness(0) invert(1);
-	}
-	.hero__content h1 {
-		color: #fff;
-		font-size: clamp(2rem, 4vw, 3rem);
-		line-height: 1.15;
-	}
-	.hero__content p {
-		color: rgba(255, 255, 255, 0.88);
 	}
 	.hero__btns {
 		display: flex;
 		align-items: center;
 		flex-wrap: wrap;
 		gap: 1rem;
-		margin-top: 1.5rem;
 	}
 	.hero__btns :global(#hero-cta-produtos.btn--outlined) {
 		color: #fff;
